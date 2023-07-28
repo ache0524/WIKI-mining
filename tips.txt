@@ -1,0 +1,5 @@
+1.运行以前需要安装wikipedia的module。在终端输入命令：pip install wikipedia
+2.安装完成以后，将需要查询的人名复制粘贴到input.txt文件中
+3.运行 famousPerson in wiki.py程序，结果输出为wiki_results.xlsx
+4.结果文件当中，C列表示是否存在wiki词条，若存在则继续输出wiki词条内容，D列为词条的完整内容，E列为词条的第一段（一般为该人物的小传）。F列为程序写入的当前时间
+5.处理歧义词条时，会将每个选项作为单独的行输出，并在关键词后添加序号（例如"keyword - 1"，"keyword - 2"）
