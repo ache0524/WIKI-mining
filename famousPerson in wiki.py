@@ -1,3 +1,5 @@
+# pip install wikipedia
+
 import openpyxl
 import requests
 import time
@@ -6,6 +8,7 @@ from datetime import datetime
 
 # 设置语言为中文
 wikipedia.set_lang("zh")
+
 
 # 定义获取词条状态的函数
 def get_wiki_status(keywords):
@@ -25,6 +28,7 @@ def get_wiki_status(keywords):
         else:
             output.append([keyword, "0"])
     return output
+
 
 # 读取关键词文件
 with open("input.txt", "r", encoding="utf-8-sig") as file:
@@ -48,27 +52,31 @@ for i, keyword in enumerate(keywords):
     try:
         # 使用get_wiki_status函数判断关键词是否存在于Wikipedia词条
         status = get_wiki_status([keyword])[0][1]
-        
+
         if status == "1":
             # 若存在，则获取词条内容
             page = wikipedia.page(keyword)
             content = page.content
-            brief_content = page.content.split('\n')[0]
-            
+            brief_content = page.content.split("\n")[0]
+
             # 写入结果到Excel
             sheet.cell(row=row, column=1).value = i + 1
             sheet.cell(row=row, column=2).value = keyword
             sheet.cell(row=row, column=3).value = status
             sheet.cell(row=row, column=4).value = content
             sheet.cell(row=row, column=5).value = brief_content
-            sheet.cell(row=row, column=6).value = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # 写入当前时间
+            sheet.cell(row=row, column=6).value = datetime.now().strftime(
+                "%Y-%m-%d %H:%M:%S"
+            )  # 写入当前时间
             row += 1
         else:
             # 若不存在，则设置内容为空
             sheet.cell(row=row, column=1).value = i + 1
             sheet.cell(row=row, column=2).value = keyword
             sheet.cell(row=row, column=3).value = status
-            sheet.cell(row=row, column=6).value = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # 写入当前时间
+            sheet.cell(row=row, column=6).value = datetime.now().strftime(
+                "%Y-%m-%d %H:%M:%S"
+            )  # 写入当前时间
             row += 1
 
     except wikipedia.exceptions.DisambiguationError as e:
@@ -79,17 +87,22 @@ for i, keyword in enumerate(keywords):
                 # 若存在，则获取词条内容
                 page = wikipedia.page(option)
                 content = page.content
-                brief_content = page.content.split('\n')[0]
-            except (wikipedia.exceptions.DisambiguationError, wikipedia.exceptions.PageError):
+                brief_content = page.content.split("\n")[0]
+            except (
+                wikipedia.exceptions.DisambiguationError,
+                wikipedia.exceptions.PageError,
+            ):
                 continue
-                    
+
             # 写入结果到Excel
             sheet.cell(row=row, column=1).value = i + 1
             sheet.cell(row=row, column=2).value = keyword + " - " + str(j + 1)
             sheet.cell(row=row, column=3).value = status
             sheet.cell(row=row, column=4).value = content
             sheet.cell(row=row, column=5).value = brief_content
-            sheet.cell(row=row, column=6).value = datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # 写入当前时间
+            sheet.cell(row=row, column=6).value = datetime.now().strftime(
+                "%Y-%m-%d %H:%M:%S"
+            )  # 写入当前时间
             row += 1
 
 
